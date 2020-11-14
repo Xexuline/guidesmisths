@@ -1,0 +1,17 @@
+@import './variables';
+
+@function px2rem($pixels: $font-base) {
+  @return ($pixels / 16) * 1rem;
+}
+
+@mixin tablet {
+  @media (min-width: $tablet + 1px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $desktop + 1px) {
+    @content;
+  }
+}

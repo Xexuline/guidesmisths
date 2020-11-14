@@ -1,0 +1,51 @@
+@import '../../styles/base/variables';
+@import '../../styles/base/utils';
+
+.layout {
+  display: grid;
+  justify-content: center;
+  grid-template-areas: 
+  "header"
+  "left"
+  "right"
+  "footer";
+  grid-template-columns: px2rem(350);
+  grid-template-rows: auto;
+
+  @include tablet {
+    grid-template-columns: px2rem(350) px2rem(350);
+    grid-template-rows: 1fr px2rem(350) 1fr;
+    grid-template-areas: 
+    "header header"
+    "left right"
+    "footer footer";
+  }
+
+  &__header {
+    grid-area: header;
+  }
+
+  &__footer {
+    grid-area: footer;
+  }
+
+  &__left {
+    grid-area: left;
+    border: 1px solid black;
+    border-top: 0;
+
+    @include tablet {
+      border-bottom: 0;
+      border-right: 0;
+    }
+  }
+
+  &__right {
+    grid-area: right;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+  }
+  &__header, &__footer {
+    border: 1px solid black;
+  }
+}
