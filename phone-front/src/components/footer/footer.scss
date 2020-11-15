@@ -1,0 +1,20 @@
+
+$baseColor: grey;
+
+.footer {
+  align-items: flex-end;
+  color: $baseColor;
+  display: flex;
+  justify-content: flex-end;
+  height: 100%;
+
+  a {
+    color: $baseColor;
+    text-decoration: none;
+
+
+    &:visited {
+      color: $baseColor;
+    }
+  }
+}

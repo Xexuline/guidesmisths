@@ -12,7 +12,7 @@ class HeaderComponent extends Component {
   render() {
     return (
       <header>
-        <h1>header</h1>
+        <h1>Phone catalog</h1>
       </header>
     )
   }

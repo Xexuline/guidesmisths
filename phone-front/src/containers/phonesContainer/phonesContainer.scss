@@ -1,1 +1,10 @@
+@import '../../styles/base/utils';
 
+.phone-container {
+  max-height: 30vh;
+  overflow: scroll;
+
+  @include tablet {
+    max-height: 70vh;
+  }
+}

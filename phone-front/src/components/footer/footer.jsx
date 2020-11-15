@@ -12,7 +12,7 @@ class FooterComponent extends Component {
 
   render() {
     return (
-      <span>footer</span>
+      <div className="footer"><span>Made with <span className="icon icon-heart"></span> by <a href="lindekin"><span className="icon icon-linkedin"></span></a><a href="github"><span className="icon icon-github"></span></a></span></div>
     )
   }
 }

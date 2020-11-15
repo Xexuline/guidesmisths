@@ -1,0 +1,31 @@
+@import '../../styles/base/utils';
+@import '../../styles/base/variables';
+
+.phone_card {
+  &__wrapper {
+    align-items: center;
+    background-color: $primary;      
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    min-height: 40px;
+    padding: 0 5px;
+
+    &:hover {
+      background-color: darken($primary, 8%);
+      border: 1px solid darken($primary, 80%);
+      box-shadow: 1px solid;
+      cursor: pointer;
+    }
+  
+    .icon {
+      color: darken($primary, 80%);
+      transform: rotate(-90deg);
+
+      @include tablet {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+}

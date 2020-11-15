@@ -14,7 +14,7 @@
 
   @include tablet {
     grid-template-columns: px2rem(350) px2rem(350);
-    grid-template-rows: 1fr px2rem(350) 1fr;
+    grid-template-rows: 1fr px2rem(350) 0fr;
     grid-template-areas: 
     "header header"
     "left right"
@@ -30,9 +30,11 @@
   }
 
   &__left {
-    grid-area: left;
     border: 1px solid black;
     border-top: 0;
+    display: flex;
+    flex-flow: column;
+    grid-area: left;
 
     @include tablet {
       border-bottom: 0;
