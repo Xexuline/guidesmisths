@@ -56,4 +56,17 @@ DataRouting.put('/:id', emptyValidator, async (req, res) => {
   }
 });
 
+DataRouting.delete('/:id', async (req, res) => {
+  try {
+    const phoneId = req.params.id;
+    const { _id: id } = await phone.removePhone(phoneId);
+
+    res.statusCode = STATUS.OK;
+    res.send({ id });
+  } catch (error) {
+    res.statusCode = STATUS.INTERNAL_SERVER_ERROR;
+    res.send({ error: error.message });
+  }
+});
+
 module.exports = DataRouting;

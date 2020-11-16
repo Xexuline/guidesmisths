@@ -11,3 +11,5 @@ exports.getPhones = (id) => {
 };
 
 exports.updatePhone = (phoneId, phoneInfo) => phone.update(phoneId, phoneInfo);
+
+exports.removePhone = (phoneId) => phone.delete(phoneId);

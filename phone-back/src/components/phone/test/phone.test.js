@@ -343,4 +343,44 @@ describe('API Tests', () => {
       done();
     });
   });
+
+  it('should delete selected phone', async (done) => {
+    const id = '5fb260bf62215fc88be82f93';
+    mockingoose('phones').toReturn({ _id: id }, 'findOneAndDelete');
+
+    const request = httpMocks.createRequest({
+      method: 'DELETE',
+      url: `/${id}`,
+    });
+
+    const response = httpMocks.createResponse();
+
+    router(request, response);
+
+    response.on('end', (body) => {
+      expect(response.statusCode).toBe(200);
+      expect(body).toBeDefined()
+      done();
+    });
+  });
+  it('should return error on delete phone', async (done) => {
+    const errorMsg = 'ERROR!!';
+    mockingoose('phones').toReturn(new Error(errorMsg), 'findOneAndDelete');
+    const id = '5fb260bf62215fc88be82f93';
+
+    const request = httpMocks.createRequest({
+      method: 'DELETE',
+      url: `/${id}`,
+    });
+
+    const response = httpMocks.createResponse();
+
+    router(request, response);
+
+    response.on('end', (body) => {
+      expect(body.error).toBe(errorMsg);
+      expect(response.statusCode).toBe(500);
+      done();
+    });
+  });
 });

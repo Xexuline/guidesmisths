@@ -29,3 +29,5 @@ exports.getList = async () => PhoneModel.find();
 exports.getById = async (id) => PhoneModel.findById(id);
 
 exports.update = async (phoneId, phoneInfo) => PhoneModel.findByIdAndUpdate(phoneId, phoneInfo, { new: true });
+
+exports.delete = async (phoneId) => PhoneModel.findByIdAndDelete(phoneId);
