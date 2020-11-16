@@ -1,9 +1,10 @@
 const express = require('express');
 const STATUS = require('http-status');
 const phone = require('./phone.controller');
+const emptyValidator = require('../middleware/notEmptyValidator');
 
 const DataRouting = express.Router();
-DataRouting.post('/', (req, res) => {
+DataRouting.post('/', emptyValidator, (req, res) => {
   const phoneInfo = req.body;
   phone.savePhone(phoneInfo)
     .then((result) => {
@@ -35,6 +36,20 @@ DataRouting.get('/:id', async (req, res) => {
 
     res.statusCode = STATUS.OK;
     res.send(phoneInfo);
+  } catch (error) {
+    res.statusCode = STATUS.INTERNAL_SERVER_ERROR;
+    res.send({ error: error.message });
+  }
+});
+
+DataRouting.patch('/:id', emptyValidator, async (req, res) => {
+  try {
+    const phoneId = req.params.id;
+    const phoneInfo = req.body;
+    const updatedPhoneInfo = await phone.updatePhone(phoneId, phoneInfo);
+
+    res.statusCode = STATUS.OK;
+    res.send(updatedPhoneInfo);
   } catch (error) {
     res.statusCode = STATUS.INTERNAL_SERVER_ERROR;
     res.send({ error: error.message });
