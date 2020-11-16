@@ -42,7 +42,7 @@ DataRouting.get('/:id', async (req, res) => {
   }
 });
 
-DataRouting.patch('/:id', emptyValidator, async (req, res) => {
+DataRouting.put('/:id', emptyValidator, async (req, res) => {
   try {
     const phoneId = req.params.id;
     const phoneInfo = req.body;

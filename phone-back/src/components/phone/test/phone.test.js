@@ -277,24 +277,70 @@ describe('API Tests', () => {
     });
   });
 
-  // it('should return selected phone', async (done) => {
-  //   const errorMsg = 'ERROR!!';
-  //   mockingoose('phones').toReturn(new Error(errorMsg), 'find');
-  //   const id = '5fb260bf62215fc88be82f93';
+  it('should return error on selected phone', async (done) => {
+    const errorMsg = 'ERROR!!';
+    mockingoose('phones').toReturn(new Error(errorMsg), 'findOne');
+    const id = '5fb260bf62215fc88be82f93';
 
-  //   const request = httpMocks.createRequest({
-  //     method: 'GET',
-  //     url: `/${id}`,
-  //   });
+    const request = httpMocks.createRequest({
+      method: 'GET',
+      url: `/${id}`,
+    });
 
-  //   const response = httpMocks.createResponse();
+    const response = httpMocks.createResponse();
 
-  //   router(request, response);
+    router(request, response);
 
-  //   response.on('end', (body) => {
-  //     expect(body.error).toBe(errorMsg);
-  //     expect(response.statusCode).toBe(500);
-  //     done();
-  //   });
-  // });
+    response.on('end', (body) => {
+      expect(body.error).toBe(errorMsg);
+      expect(response.statusCode).toBe(500);
+      done();
+    });
+  });
+
+  it('should update selected phone', async (done) => {
+    mockingoose('phones').toReturn(mockFind, 'findOneAndUpdate');
+    const id = '5fb260bf62215fc88be82f93';
+
+    const request = httpMocks.createRequest({
+      method: 'PUT',
+      url: `/${id}`,
+      body: {
+        name: 'iPhone 7-changed',
+      }
+    });
+
+    const response = httpMocks.createResponse();
+
+    router(request, response);
+
+    response.on('end', (body) => {
+      expect(response.statusCode).toBe(200);
+      expect(body).toBeDefined()
+      done();
+    });
+  });
+  it('should return error on selected phone', async (done) => {
+    const errorMsg = 'ERROR!!';
+    mockingoose('phones').toReturn(new Error(errorMsg), 'findOneAndUpdate');
+    const id = '5fb260bf62215fc88be82f93';
+
+    const request = httpMocks.createRequest({
+      method: 'PUT',
+      url: `/${id}`,
+      body: {
+        name: 'iPhone 7-changed',
+      }
+    });
+
+    const response = httpMocks.createResponse();
+
+    router(request, response);
+
+    response.on('end', (body) => {
+      expect(body.error).toBe(errorMsg);
+      expect(response.statusCode).toBe(500);
+      done();
+    });
+  });
 });
