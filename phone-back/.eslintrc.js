@@ -18,5 +18,6 @@ module.exports = {
     'no-console': 0, //permitir console.logs
     'prefer-destructuring': 0,
     'no-underscore-dangle': 0,
+    'max-len': 150,
   }
 }
