@@ -50,37 +50,40 @@ describe('Phone unit testing ', () => {
       mockingoose.resetAll();
     });
 
-    it('Model should save on DB an item', () => {
+    it('Model should save on DB an item', async (done) => {
       model
         .add(dataToSave)
         .then((res) => {
           expect(res.name).not.toBeNull();
+          done();
         });
     });
 
-    it('Model should throw an error', () => {
+    it('Model should throw an error', async (done) => {
       mockingoose.phones.toReturn(new Error('error'), 'save');
       model
         .add(dataToSave)
         .catch((err) => {
           expect(err.message).toBe('error');
+          done();
         });
     });
 
-    it('Model should return selected phone', () => {
-      mockingoose('phones').toReturn(mockFind, 'find');
+    it('Model should return selected phone', async (done) => {
       const id = '5fb260bf62215fc88be82f93';
+      const findOne = mockFind[0];
+      mockingoose('phones').toReturn(findOne, 'findOne');
 
       model
         .getById(id)
         .then((phone) => {
           expect(phone).toBeDefined();
           expect(phone.name).toBe('iPhone 7');
-          expect(phone._id).toBe(id);
+          done();
         });
     });
 
-    it('Model should return all saved phones', () => {
+    it('Model should return all saved phones', async (done) => {
       mockingoose('phones').toReturn(mockFind, 'find');
 
       model
@@ -88,58 +91,47 @@ describe('Phone unit testing ', () => {
         .then((phoneList) => {
           expect(phoneList).toBeDefined();
           expect(phoneList.length).toBe(2);
+          done();
         });
     });
   });
 
   describe('Controller unit test', () => {
-    it('Phone controller should save an item', () => {
+    beforeEach(() => {
+      mockingoose.resetAll();
+    });
+
+    it('Phone controller should save an item', async (done) => {
       controller.savePhone(dataToSave)
         .then((res) => {
           expect(res._id).not.toBeNull();
           expect(res.name).toBe(dataToSave.name);
+          done();
         });
     });
 
-    it('Phone controller should not create item (empty object)', () => {
-      controller.savePhone({})
-        .catch((err) => {
-          expect(err.message).toContain('empty-phone-info');
-        });
-    });
-
-    it('Phone controller should not create item (null object)', () => {
-      controller.savePhone(null)
-        .catch((err) => {
-          expect(err.message).toContain('empty-phone-info');
-        });
-    });
-
-    it('Phone controller should not create item (undefined object)', () => {
-      controller.savePhone(undefined)
-        .catch((err) => {
-          expect(err.message).toContain('empty-phone-info');
-        });
-    });
-
-    it('Phone controller should find selected phone', () => {
-      mockingoose('phones').toReturn(mockFind, 'find');
+    it('Phone controller should find selected phone', async (done) => {
       const id = '5fb260bf62215fc88be82f93';
+      const findOne = mockFind[0];
+      mockingoose('phones').toReturn(findOne, 'findOne');
 
-      controller.getPhones(id)
+      controller
+        .getPhones(id)
         .then((phone) => {
           expect(phone).toBeDefined();
-          expect(phone._id).toBe(id);
+          expect(phone.name).toBe('iPhone 7');
+          done();
         });
     });
 
-    it('Phone controller should find all phones', () => {
+    it('Phone controller should find all phones', async (done) => {
       mockingoose('phones').toReturn(mockFind, 'find');
 
       controller.getPhones()
         .then((phoneList) => {
           expect(phoneList).toBeDefined();
           expect(phoneList.length).toBe(2);
+          done();
         });
     });
   });
@@ -154,7 +146,7 @@ describe('API Tests', () => {
     const request = httpMocks.createRequest({
       method: 'POST',
       url: '/',
-      body: [
+      body:
         {
           name: 'iPhone 7',
           manufacturer: 'Apple',
@@ -167,14 +159,11 @@ describe('API Tests', () => {
           ram: 2,
           timestamp: '2020-11-16T11:21:35.778Z',
         },
-      ],
     });
 
     const response = httpMocks.createResponse();
 
-    router(request, response, (err) => {
-      expect(err).toBeFalsy();
-    });
+    router(request, response);
 
     response.on('end', (body) => {
       expect(response.statusCode).toBe(201);
@@ -208,22 +197,21 @@ describe('API Tests', () => {
     });
   });
 
-  it('should return empty-phone-info on undefined body', async (done) => {
+  it('should return No content on empty body', async (done) => {
     const request = httpMocks.createRequest({
       method: 'POST',
       url: '/',
-      body: undefined,
+      body: {},
     });
 
     const response = httpMocks.createResponse();
 
-    router(request, response, (err) => {
-      expect(err).toBeFalsy();
-    });
+    router(request, response);
 
-    response.on('end', (body) => {
-      expect(response.statusCode).toBe(500);
-      expect(body.error).toBe('empty-phone-info');
+    expect(response.statusCode).toBe(204);
+
+    response.on('end', () => {
+      expect(response.statusCode).toBe(204);
       done();
     });
   });
@@ -238,9 +226,7 @@ describe('API Tests', () => {
 
     const response = httpMocks.createResponse();
 
-    router(request, response, (err) => {
-      expect(err).toBeFalsy();
-    });
+    router(request, response);
 
     response.on('end', (body) => {
       expect(response.statusCode).toBe(200);
@@ -250,7 +236,7 @@ describe('API Tests', () => {
     });
   });
 
-  it('should return all saved phones', async (done) => {
+  it('should return error on all saved phones', async (done) => {
     const errorMsg = 'ERROR!!';
     mockingoose('phones').toReturn(new Error(errorMsg), 'find');
 
@@ -270,25 +256,26 @@ describe('API Tests', () => {
     });
   });
 
-  // it('should return selected phone', async (done) => {
-  //   mockingoose('phones').toReturn(mockFind, 'find');
-  //   const id = '5fb260bf62215fc88be82f93';
+  it('should return selected phone', async (done) => {
+    const id = '5fb260bf62215fc88be82f93';
+    const findOne = mockFind[0];
+    mockingoose('phones').toReturn(findOne, 'findOne');
 
-  //   const request = httpMocks.createRequest({
-  //     method: 'GET',
-  //     url: `/${id}`,
-  //   });
+    const request = httpMocks.createRequest({
+      method: 'GET',
+      url: `/${id}`,
+    });
 
-  //   const response = httpMocks.createResponse();
+    const response = httpMocks.createResponse();
 
-  //   router(request, response);
+    router(request, response);
 
-  //   response.on('end', (body) => {
-  //     expect(response.statusCode).toBe(200);
-  //     expect(body).toBeDefined();
-  //     done();
-  //   });
-  // });
+    response.on('end', (body) => {
+      expect(response.statusCode).toBe(200);
+      expect(body).toBeDefined();
+      done();
+    });
+  });
 
   // it('should return selected phone', async (done) => {
   //   const errorMsg = 'ERROR!!';
