@@ -1,9 +1,10 @@
+import { http } from '../http'
+
 export class PhoneService {
   static async getList () {
     try {
-      const response = await fetch('/phones').then(response => response.json())
-      console.log(response)
-      
+      const response = await http.get('/phone')
+      return response
     } catch (e) {
       console.error(e)
     }
@@ -11,7 +12,7 @@ export class PhoneService {
 
   static async getInfo (id) {
     try {
-      const response = await fetch(`/phone/${id}`).then(response => response.json())
+      const response = await http.get(`/phone/${id}`).then(response => response.json())
       console.log(response)
       
     } catch (e) {
@@ -21,7 +22,7 @@ export class PhoneService {
 
   static async create (id, payload) {
     try {
-      const response = await fetch(`/phone/${id}`, { method: 'POST' }).then(response => response.json())
+      const response = await http.post(`/phone/${id}`, { method: 'POST' }).then(response => response.json())
       console.log(response)
       
     } catch (e) {
@@ -31,7 +32,7 @@ export class PhoneService {
 
   static async update (id, payload) {
     try {
-      const response = await fetch(`/phone/${id}`, { method: 'PUT' }).then(response => response.json())
+      const response = await http.put(`/phone/${id}`, { method: 'PUT' }).then(response => response.json())
       console.log(response)
       
     } catch (e) {
@@ -41,7 +42,7 @@ export class PhoneService {
 
   static async remove (id) {
     try {
-      const response = await fetch(`/phone/${id}`, { method: 'DELETE' }).then(response => response.json())
+      const response = await http.delete(`/phone/${id}`, { method: 'DELETE' }).then(response => response.json())
       console.log(response)
       
     } catch (e) {
