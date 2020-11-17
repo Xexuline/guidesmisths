@@ -24,7 +24,7 @@ exports.add = async (phoneInfo) => {
   return phone.save();
 };
 
-exports.getList = async () => PhoneModel.find();
+exports.getList = async () => PhoneModel.find({}).select('name manufacturer imageFileName price');
 
 exports.getById = async (id) => PhoneModel.findById(id);
 
