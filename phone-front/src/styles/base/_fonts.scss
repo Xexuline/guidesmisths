@@ -39,8 +39,14 @@ code {
 .icon-pencil:before {
   content: "\e905";
 }
+.icon-spinner:before {
+  content: "\e97f";
+}
 .icon-bin:before {
   content: "\e9ac";
+}
+.icon-heart:before {
+  content: "\e9da";
 }
 .icon-plus:before {
   content: "\ea0a";
@@ -51,15 +57,12 @@ code {
 .icon-checkmark:before {
   content: "\ea10";
 }
-.icon-circle-left:before {
-  content: "\ea44";
-}
 .icon-github:before {
   content: "\eab0";
 }
 .icon-linkedin:before {
   content: "\eac9";
 }
-.icon-heart:before {
-  content: "\e9da";
+.icon-arrow:before {
+  content: "\e900";
 }

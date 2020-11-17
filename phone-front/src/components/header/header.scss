@@ -1,0 +1,17 @@
+@import '../../styles/base/variables';
+@import '../../styles/base/utils';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  &__button {
+    background: transparent;
+    border: none;
+    color: $primary;
+    cursor: pointer;
+    font-size: px2rem(24);
+    padding: 0;
+    min-width: px2rem(50);
+  }
+}

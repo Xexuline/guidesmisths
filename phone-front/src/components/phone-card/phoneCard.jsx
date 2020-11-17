@@ -1,22 +1,16 @@
 import React, { Component } from 'react'
 import './phoneCard.scss'
 import propTypes from 'prop-types'
-
+import { Link } from 'react-router-dom'
 class PhoneCard extends Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-    }
-  }
-
   render() {
-    const { name, click } = this.props
+    const { name, _id } = this.props
     return (
-      <div className="phone_card__wrapper" onClick={click}>
+      <Link className="phone_card__wrapper" to={`/${ _id }`}>
         <span>{ name }</span>
         <span className="icon icon-circle-left" aria-hidden="true"></span>
-      </div>
+      </Link>
     )
   }
 }
