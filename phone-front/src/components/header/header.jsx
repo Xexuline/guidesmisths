@@ -1,17 +1,12 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { useHistory } from 'react-router-dom'
+import React from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 import './header.scss'
 
 function HeaderComponent() {
-
-  // constructor(props) {
-  //   super(props)
-
-  //   this.goBack = this.goBack.bind(this)
-  // }
   const history = useHistory()
+  const location = useLocation()
   function goBack() {
+    console.log(location)
     history.goBack();
   }
 
@@ -19,15 +14,13 @@ function HeaderComponent() {
     history.push('/new')
   }
 
-  // render() {
   return (
     <header className="header">
       <button className="icon icon-arrow header__button" onClick={ goBack }></button>
       <h1>Phone catalog</h1>
-      <button className="icon icon-plus header__button" onClick={ create }></button>
+      { location.pathname === '/' ? <button className="icon icon-plus header__button" onClick={ create }></button> : <span className="header__button"></span>}
     </header>
   )
-  // }
 }
 HeaderComponent.propTypes = {
   

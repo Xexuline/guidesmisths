@@ -3,7 +3,9 @@
 
 .header {
   display: flex;
+  height: px2rem(80);
   justify-content: space-between;
+  padding: 0 px2rem(20);
 
   &__button {
     background: transparent;

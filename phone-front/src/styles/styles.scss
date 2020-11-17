@@ -1,3 +1,7 @@
 @import './base/variables';
 @import './base/utils';
 @import './base/fonts';
+
+.modal-open {
+  overflow: hidden;
+}

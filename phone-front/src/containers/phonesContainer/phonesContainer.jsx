@@ -9,7 +9,26 @@ class PhonesContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      showBackToTop: false
     }
+
+    this.checkScroll = this.checkScroll.bind(this)
+  }
+
+  checkScroll(e) {
+    // const firstElement = document.querySelector('.phone-card__wrapper')
+    
+    // console.log(firstElement)
+    // console.log('offsetTop', firstElement.offsetTop, 'scrollTop', firstElement.scrollTop, 'clientTop', firstElement.clientTop)
+    // console.log(e)
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.checkScroll)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.checkScroll)
   }
 
   render() {

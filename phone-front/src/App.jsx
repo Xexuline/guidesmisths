@@ -16,13 +16,11 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      loading: true,
+      loading: false,
       phoneList: []
     }
 
     this.getPhonesList = this.getPhonesList.bind(this)
-  }
-  changeSelected() {
   }
 
   getPhonesList() {
@@ -40,29 +38,34 @@ class App extends Component {
     this.getPhonesList()
   }
 
+  lockBody(loading){
+    const body = document.querySelector('body')
+    // debugger
+    body.classList[loading ? 'add' : 'remove']('modal-open')
+  }
+
+  componentDidUpdate(prevProp, prevState) {
+    // debugger
+    if(prevState.loading !== this.state.loading) {
+      this.lockBody(this.state.loading)
+    }
+  }
+
   render() {
-    const classNames = ['App', this.state.loading ? 'modal-open' : null].join(' ')
+    // const classNames = ['App', this.state.loading ? 'modal-open' : null].join(' ')
     return (
       <BrowserRouter>
-        <div className={ classNames }>
-          <Header />
-          <Switch>
-            <Route path="/" exact={ true } component={ () => <PhonesContainer phones={ this.state.phoneList } /> }></Route>
-            <Route path="/new" exact={ true } component={ () => <div>create new</div>}></Route>
-            <Route path="/update/:id" exact={ true } component={ () => <div>create new</div>}></Route>
-            <Route path="/:id" component={ () => <div>con id</div> }></Route>
-
-          </Switch>
-
-          {/* { this.state.phoneList.length && this.state.phoneList.map(el => <div key={`${el._id}"`}>{ el.name }</div>) } */}
-          {/* <Layout 
-            header={ <Header /> }
-            footer={ <Footer /> }
-            left={ <PhonesContainer selectPhone={ this.changeSelected }/> }
-            right={ <DescriptionContainer/> }
-            >
-          </Layout> */}
-          { this.state.loading ? <Modal><Spinner /></Modal> : null }
+        <div className='App'>
+          <div className="App__wrapper">
+            <Header />
+            <Switch>
+              <Route path="/" exact={ true } component={ () => <PhonesContainer phones={ this.state.phoneList } /> }></Route>
+              <Route path="/new" exact={ true } component={ () => <div>create new</div>}></Route>
+              <Route path="/update/:id" exact={ true } component={ () => <div>create new</div>}></Route>
+              <Route path="/:id" component={ () => <div>con id</div> }></Route>
+            </Switch>
+            { this.state.loading ? <Modal><Spinner /></Modal> : null }
+          </div>
         </div>
       </BrowserRouter>
     );

@@ -1,10 +1,17 @@
 @import '../../styles/base/utils';
+@import '../../styles/base/variables';
 
 .phone-container {
-  max-height: 30vh;
+  background-color: $bg;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 80px);
+  padding: 0 px2rem(20);
   overflow: scroll;
-
+  
   @include tablet {
-    max-height: 70vh;
+    align-items: center;
+    justify-content: space-around;
+    flex-flow: row wrap;
   }
 }
