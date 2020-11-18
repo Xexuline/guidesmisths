@@ -2,10 +2,15 @@ const express = require('express');
 const STATUS = require('http-status');
 const phone = require('./phone.controller');
 const emptyValidator = require('../middleware/notEmptyValidator');
+const multipartUploader = require('../middleware/multiparUploader');
 
 const DataRouting = express.Router();
-DataRouting.post('/', emptyValidator, (req, res) => {
+DataRouting.post('/',multipartUploader, emptyValidator, (req, res) => {
   const phoneInfo = req.body;
+  if(req.file) {
+    phoneInfo.imageFileName = req.file.filename
+  }
+
   phone.savePhone(phoneInfo)
     .then((result) => {
       res.statusCode = STATUS.CREATED;
@@ -42,7 +47,7 @@ DataRouting.get('/:id', async (req, res) => {
   }
 });
 
-DataRouting.put('/:id', emptyValidator, async (req, res) => {
+DataRouting.put('/:id', multipartUploader, emptyValidator, async (req, res) => {
   try {
     const phoneId = req.params.id;
     const phoneInfo = req.body;
