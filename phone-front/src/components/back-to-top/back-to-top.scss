@@ -1,0 +1,23 @@
+@import '../../styles/base/variables';
+
+.back-to-top {
+  background-color: $primary;
+  bottom: -70px;
+  border: none;
+  border-radius: 24px;
+  color: $white;
+  height: 40px;
+  position: fixed;
+  right: 10px;
+  transition: 0.5s ease-in-out;
+  transform: rotate(90deg);
+  width: 40px;
+
+  &__visible {
+    bottom: 10px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
