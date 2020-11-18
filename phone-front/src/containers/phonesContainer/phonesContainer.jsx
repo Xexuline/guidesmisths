@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import PhoneCard from '../../components/phone-card/phoneCard'
 import BackToTop from '../../components/back-to-top/back-to-top'
 import './phonesContainer.scss'
 import { PhoneService } from '../../services/phone'
+import { setLoading } from '../../store/ui/actions'
 
 // TODO Mock api
 class PhonesContainer extends Component {
@@ -23,19 +26,19 @@ class PhonesContainer extends Component {
     const headerHeight = document.querySelector('.header').clientHeight
 
     if (scrollTop >= headerHeight) {
-      !this.state.showBackToTop && this.setState({ showBackToTop: true }, () => { console.log('cambiado,', true)})
+      !this.state.showBackToTop && this.setState({ showBackToTop: true })
     } else {
-      this.state.showBackToTop && this.setState({ showBackToTop: false }, () => { console.log('cambiado,', false)})
+      this.state.showBackToTop && this.setState({ showBackToTop: false })
     }
   }
 
   getPhonesList() {
+    this.props.setLoading(true)
     PhoneService
       .getList()
       .then(({data: phoneList}) => {
-        this.setState({ 
-          phoneList
-        })
+        this.setState({ phoneList })
+        this.props.setLoading(false)
       })
   }
 
@@ -66,6 +69,12 @@ class PhonesContainer extends Component {
   }
 }
 
-PhonesContainer.propTypes = {}
+const mapDispatchToProps = {
+  setLoading
+}
 
-export default PhonesContainer
+PhonesContainer.propTypes = {
+  setLoading: PropTypes.func
+}
+
+export default connect(null, mapDispatchToProps)(PhonesContainer)
