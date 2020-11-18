@@ -2,7 +2,6 @@
 @import '../../styles/base/variables';
 
 .phone-container {
-  background-color: $bg;
   display: flex;
   flex-direction: column;
   min-height: calc(100vh - 80px);
@@ -13,5 +12,9 @@
     align-items: center;
     justify-content: space-around;
     flex-flow: row wrap;
+  }
+
+  &__wrapper {
+    background-color: $bg;
   }
 }
