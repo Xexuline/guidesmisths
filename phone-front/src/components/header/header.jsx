@@ -22,8 +22,5 @@ function HeaderComponent() {
     </header>
   )
 }
-HeaderComponent.propTypes = {
-  
-}
 
 export default HeaderComponent

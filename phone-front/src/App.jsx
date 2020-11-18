@@ -15,17 +15,6 @@ class App extends Component {
     this.state = {}
   }
 
-  lockBody(loading){
-    const body = document.querySelector('body')
-    body.classList[loading ? 'add' : 'remove']('modal-open')
-  }
-
-  componentDidUpdate(prevProp) {
-    if(prevProp.loading !== this.props.loading) {
-      this.lockBody(this.state.loading)
-    }
-  }
-
   render() {
     return (
       <BrowserRouter>
@@ -34,14 +23,13 @@ class App extends Component {
             <Header />
             <Switch>
               <Route path="/" exact={ true } component={ PhonesContainer }></Route>
-              <Route path="/new" exact={ true } component={ () => <div>create new</div>}></Route>
-              <Route path="/update/:id" exact={ true } component={ () => <div>create new</div>}></Route>
+              {/* <Route path="/new" exact={ true } component={ () => <div>create new</div>}></Route>
+              <Route path="/update/:id" exact={ true } component={ () => <div>create new</div>}></Route> */}
               <Route path="/:id" component={ DescriptionContainer }></Route>
             </Switch>
             <Modal>
               <Spinner />
             </Modal>
-            {/* { this.props.loading ? <Modal><Spinner /></Modal> : null } */}
           </main>
         </div>
       </BrowserRouter>

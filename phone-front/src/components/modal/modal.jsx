@@ -3,6 +3,18 @@ import { connect } from 'react-redux'
 import './modal.scss'
 
 class ModalComponent extends Component {
+
+  lockBody(loading){
+    const body = document.querySelector('body')
+    body.classList[loading ? 'add' : 'remove']('modal-open')
+  }
+
+  componentDidUpdate(prevProp) {
+    if(prevProp.loading !== this.props.loading) {
+      this.lockBody(this.props.loading)
+    }
+  }
+
   render() {
     return this.props.loading ? (
       <div className="modal">
