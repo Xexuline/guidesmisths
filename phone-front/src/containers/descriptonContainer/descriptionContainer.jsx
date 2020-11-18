@@ -10,7 +10,17 @@ class DescriptionContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      phoneInfo: {}
+      phoneInfo: {
+        name: '',
+        manufacturer: '',
+        description: '',
+        color: '',
+        price: '',
+        imageFileName: '',
+        screen: '',
+        processor: '',
+        ram: ''
+      }
     }
   }
 
