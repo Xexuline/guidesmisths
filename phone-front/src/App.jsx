@@ -33,10 +33,10 @@ class App extends Component {
           <main className="App__wrapper">
             <Header />
             <Switch>
-              <Route path="/" exact={ true } component={ () => <PhonesContainer /> }></Route>
+              <Route path="/" exact={ true } component={ PhonesContainer }></Route>
               <Route path="/new" exact={ true } component={ () => <div>create new</div>}></Route>
               <Route path="/update/:id" exact={ true } component={ () => <div>create new</div>}></Route>
-              <Route path="/:id" component={ () => <DescriptionContainer /> }></Route>
+              <Route path="/:id" component={ DescriptionContainer }></Route>
             </Switch>
             <Modal>
               <Spinner />

@@ -3,8 +3,7 @@ import { http } from '../http'
 export class PhoneService {
   static async getList () {
     try {
-      const response = await http.get('/phone')
-      return response
+      return await http.get('/phone')
     } catch (e) {
       console.error(e)
     }
@@ -12,9 +11,7 @@ export class PhoneService {
 
   static async getInfo (id) {
     try {
-      const response = await http.get(`/phone/${id}`).then(response => response.json())
-      console.log(response)
-      
+      return await http.get(`/phone/${id}`)
     } catch (e) {
       console.error(e)
     }
@@ -22,8 +19,7 @@ export class PhoneService {
 
   static async create (id, payload) {
     try {
-      const response = await http.post(`/phone/${id}`, { method: 'POST' }).then(response => response.json())
-      console.log(response)
+      return await http.post(`/phone/${id}`)
       
     } catch (e) {
       console.error(e)
@@ -32,9 +28,7 @@ export class PhoneService {
 
   static async update (id, payload) {
     try {
-      const response = await http.put(`/phone/${id}`, { method: 'PUT' }).then(response => response.json())
-      console.log(response)
-      
+      return await http.put(`/phone/${id}`)
     } catch (e) {
       console.error(e)
     }
@@ -42,9 +36,7 @@ export class PhoneService {
 
   static async remove (id) {
     try {
-      const response = await http.delete(`/phone/${id}`, { method: 'DELETE' }).then(response => response.json())
-      console.log(response)
-      
+      return await http.delete(`/phone/${id}`)
     } catch (e) {
       console.error(e)
     }
