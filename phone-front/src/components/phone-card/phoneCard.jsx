@@ -9,7 +9,7 @@ class PhoneCard extends Component {
     return (
       <Link className="phone-card__wrapper" to={`/${ _id }`}>
         <div className="phone-card__image">
-          <img src={ imageFileName } alt=""/>
+          <img src={ `http://localhost:3001/uploads/${imageFileName}` } alt=""/>
         </div>
         <div className="phone-card__info">
           <div className="phone-card__info--top">
