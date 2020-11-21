@@ -20,7 +20,7 @@ function ExtraActions(props) {
           </li>}
         {!onSave ? null : 
           <li className="extra__item">
-            <button className="extra__button" onClick={ onSave }>Save</button>
+            <button type="submit" className="extra__button" onClick={ onSave }>Save</button>
           </li>}
      </ul>
    </nav>

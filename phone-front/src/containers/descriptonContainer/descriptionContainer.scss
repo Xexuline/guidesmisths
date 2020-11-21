@@ -82,9 +82,10 @@
     }
 
     label {
-      margin-right: px2rem(8);
-      line-height: px2rem(21);
       font-size: px2rem(16);
+      line-height: px2rem(21);
+      margin-right: px2rem(8);
+      min-width: px2rem(120);
     }
 
     input, textarea {

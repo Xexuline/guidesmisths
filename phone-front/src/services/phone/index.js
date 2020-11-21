@@ -28,7 +28,7 @@ export class PhoneService {
 
   static async update (id, payload) {
     try {
-      return await http.put(`/phone/${id}`)
+      return await http.put(`/phone/${id}`, payload)
     } catch (e) {
       console.error(e)
     }

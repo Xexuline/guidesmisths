@@ -20,18 +20,22 @@ class DescriptionContainer extends Component {
 
   }
 
-  phoneAttributeGenerator(description, content) {
-    if (!content || ['imageFileName', 'description', 'id', 'name', 'manufacturer'].includes(description) ) {
-      return null
-    }
-
+  phoneAttributeGenerator(description, content) {    
     if(this.state.isEdditing) {
+      if (['imageFileName', 'description', 'id'].includes(description) ) {
+        return null
+      }
+
       return (
         <div key={ description } className="description__field">
           <label htmlFor={`field_${description}`}>{ description }:</label>
-          <input type="text" defaultValue={content}></input>
+          <input id={`field_${description}`} type={ ['price', 'ram'].includes(description) ? 'number' : 'text' } defaultValue={content}></input>
         </div>
       )
+    }
+
+    if (!content || ['imageFileName', 'description', 'id', 'name', 'manufacturer'].includes(description) ) {
+      return null
     }
 
     return (
@@ -49,6 +53,25 @@ class DescriptionContainer extends Component {
     const id = this.getPhoneId()
     await this.props.removePhone(id)
     this.props.history.push('/')
+  }
+
+  async updatePhone(e) {
+    e.preventDefault()
+
+    const updatedData = Object.keys(this.props.phoneInfo).reduce((prev, curr) => {
+      const field = document.querySelector(`#field_${curr}`)
+      if(['price', 'ram'].includes(curr)) {
+        field.value = Number.parseInt(field.value) || 0
+      }
+      
+      return {
+        ...prev,
+        [curr]: field?.value || this.props.phoneInfo[curr]
+      }
+    }, {})
+    await this.props.updatePhone(updatedData)
+    this.props.history.push(`/${this.props.phoneInfo.id}`)
+
   }
 
   changeExtraPosition() {
@@ -96,7 +119,7 @@ class DescriptionContainer extends Component {
         { isEdditing
           ? <form className="description__wrapper">
               <PhoneEditor phoneInfo={ phoneInfo } phoneAttributeGenerator={ this.phoneAttributeGenerator.bind(this) }/>
-              <ExtraActions onSave={ () => {} }/>
+              <ExtraActions onSave={ this.updatePhone.bind(this) }/>
             </form>
           : <article className="description__wrapper"> 
               <PhoneViever phoneInfo={ phoneInfo } phoneAttributeGenerator={ this.phoneAttributeGenerator.bind(this) }/>
@@ -111,7 +134,8 @@ class DescriptionContainer extends Component {
 const mapDispatchToProps = (dispatch) => ({
   setLoading: dispatch(setLoading),
   getPhoneInfo: bindActionCreators(ThunkActions.getPhoneInfo, dispatch),
-  removePhone: bindActionCreators(ThunkActions.removePhone, dispatch)
+  removePhone: bindActionCreators(ThunkActions.removePhone, dispatch),
+  updatePhone: bindActionCreators(ThunkActions.updatePhone, dispatch)
 })
 
 const mapStateToProps = (state) => ({

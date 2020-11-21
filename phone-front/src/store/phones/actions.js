@@ -20,4 +20,11 @@ export class ThunkActions {
   static removePhone = (id) => async () => {
     return await PhoneService.remove(id)
   }
+
+  static updatePhone = (updatedInfo) => async (dispatch) => {
+    const { data: phoneInfo } = await PhoneService.update(updatedInfo.id, updatedInfo)
+    const { _id, timestamp, __v, ...rest } = phoneInfo
+
+    return dispatch({ type: SET_PHONE_DESC, payload: { ...rest, id: _id } })
+  }
 }
