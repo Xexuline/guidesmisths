@@ -1,0 +1,47 @@
+
+@import '../../styles/base/utils';
+@import '../../styles/base/variables';
+
+.extra {
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0 auto;
+  position: fixed;
+  width: 100%;
+
+  @include tablet {
+    right: 0;
+    width: 50%;
+  }
+
+  &__wrapper {
+    display: flex;
+    list-style: none;
+  }
+
+  &__item {
+    text-decoration: none;
+    padding: 0 px2rem(5);
+
+    &:nth-child(2) {
+      &::before {
+        color: darken($primary, 20%);
+        content: ' | ';
+      }
+    }
+  }
+
+  &__button {
+    background-color: transparent;
+    border: none;
+    color: darken($primary, 20%);
+    font-size: 20px;
+    line-height: 25px;
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

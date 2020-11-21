@@ -6,6 +6,7 @@ import { PhoneService } from '../../services/phone'
 import { setLoading } from '../../store/ui/actions'
 import noPhponeimg from '../../assets/img/svg/noPhone.svg'
 import emptyImage from '../../assets/img/svg/empty.svg'
+import ExtraActions from '../../components/extra-actions/extra-actions'
 
 class DescriptionContainer extends Component {
 
@@ -13,6 +14,7 @@ class DescriptionContainer extends Component {
     super(props)
     this.state = {
       phoneInfo: {
+        id: '',
         name: '',
         manufacturer: '',
         description: '',
@@ -27,7 +29,7 @@ class DescriptionContainer extends Component {
   }
 
   phoneAttributeGenerator(description, content) {
-    if (!content || ['imageFileName', 'description'].includes(description) ) {
+    if (!content || ['imageFileName', 'description', 'id'].includes(description) ) {
       return null
     }
 
@@ -36,32 +38,42 @@ class DescriptionContainer extends Component {
       <span className="description__attributes--description">{ description }</span>
       <span className="description__attributes--content">{ content }</span>
     </div>)
+  }
 
+  getPhoneInfo(id) {
+    PhoneService.getInfo(id).then(({data: info}) => {
+      const { description,
+        _id,
+        imageFileName,
+        color,
+        price,
+        screen,
+        processor,
+        ram } = info
+      this.setState({ phoneInfo: {
+        id: _id,
+        description,
+        imageFileName: imageFileName || '',
+        color,
+        price,
+        screen,
+        processor,
+        ram }})
+      this.props.setLoading(false)
+    })
+  }
+
+  async removePhone() {
+    await PhoneService.remove(this.state.phoneInfo.id)
+    this.props.history.push('/')
   }
 
   componentDidMount(){
     if(this.props.match) {
+      console.log(this.props)
       this.props.setLoading(true)
       const { id } = this.props.match.params
-
-      PhoneService.getInfo(id).then(({data: info}) => {
-        const { description,
-          imageFileName,
-          color,
-          price,
-          screen,
-          processor,
-          ram } = info
-        this.setState({ phoneInfo: {
-          description,
-          imageFileName: imageFileName || '',
-          color,
-          price,
-          screen,
-          processor,
-          ram }})
-        this.props.setLoading(false)
-      })
+      this.getPhoneInfo(id)      
     }
   }
 
@@ -91,6 +103,7 @@ class DescriptionContainer extends Component {
             </div>
           }
         </div>
+        <ExtraActions id={ phoneInfo.id } onDelete={ this.removePhone.bind(this) } />
       </article>
     )
   }
