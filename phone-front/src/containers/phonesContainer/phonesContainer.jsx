@@ -68,7 +68,7 @@ const mapStateToProps = (state) => ({
 })
 
 PhonesContainer.propTypes = {
-  setLoading: PropTypes.func
+  setLoading: PropTypes.object
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PhonesContainer)
