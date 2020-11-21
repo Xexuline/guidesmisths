@@ -3,12 +3,11 @@ import ReactDOM from 'react-dom';
 import './styles/styles.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createStore, applyMiddleware } from 'redux'
-import reduxThunk from 'redux-thunk'
-import rootReducer from './store'
+import { store } from './store'
 import { Provider } from 'react-redux'
+import activateInterceptors from './services/http/interpector'
 
-const store = createStore(rootReducer, applyMiddleware(reduxThunk))
+activateInterceptors()
 
 ReactDOM.render(
   <Provider store={ store }>
