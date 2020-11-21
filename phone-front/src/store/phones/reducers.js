@@ -1,7 +1,19 @@
-import { SET_PHONE_LIST } from './actions'
+import { SET_PHONE_LIST, SET_PHONE_DESC } from './actions'
 
 const initialState = {
-  phoneList: []
+  phoneList: [],
+  phoneInfo: {
+    id: '',
+    name: '',
+    manufacturer: '',
+    description: '',
+    color: '',
+    price: '',
+    imageFileName: '',
+    screen: '',
+    processor: '',
+    ram: ''
+  }
 }
 
 const actionsMap = {
@@ -9,6 +21,15 @@ const actionsMap = {
     return {
       ...state,
       phoneList: payload
+    }
+  },
+  [SET_PHONE_DESC]: (state, { payload }) => {
+    return {
+      ...state,
+      phoneInfo: { 
+        ...state.phoneInfo,
+        ...payload
+      }
     }
   }
 }
