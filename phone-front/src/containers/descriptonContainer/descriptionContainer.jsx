@@ -6,7 +6,6 @@ import './descriptionContainer.scss'
 import { setLoading } from '../../store/ui/actions'
 import { ThunkActions } from '../../store/phones/actions'
 import { getPhoneInfo } from '../../store/phones/getters'
-import noPhponeimg from '../../assets/img/svg/noPhone.svg'
 import ExtraActions from '../../components/extra-actions/extra-actions'
 
 class DescriptionContainer extends Component {
@@ -45,7 +44,6 @@ class DescriptionContainer extends Component {
     if (pageWidth > 768) {
       const {offsetLeft, clientWidth } = document.querySelector('.description__bottom')
 
-      // debugger
       extra.style.left = `${offsetLeft}px`
       extra.style.maxWidth = `${clientWidth}px`
     } else {
@@ -53,7 +51,6 @@ class DescriptionContainer extends Component {
       extra.style.maxWidth = ''
     }
   }
-
 
   componentDidMount(){
     if(this.props.match) {
@@ -74,7 +71,7 @@ class DescriptionContainer extends Component {
     return (
       <article className="description__wrapper">
         <div className="description__top">
-          <img className="description__image" src={  phoneInfo.imageFileName ? `http://localhost:3001/uploads/${phoneInfo.imageFileName}` : noPhponeimg } alt=""/>
+          <img className="description__image" src={  phoneInfo.imageFileName ? `http://localhost:3001/uploads/${phoneInfo.imageFileName}` : null} alt=""/>
           <div className="description__header">
             <h2>{ phoneInfo.name }</h2>
             <h3>{ phoneInfo.manufacturer }</h3>
