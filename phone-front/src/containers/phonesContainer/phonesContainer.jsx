@@ -1,24 +1,24 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { bindActionCreators } from 'redux'
 import PhoneCard from '../../components/phone-card/phoneCard'
 import BackToTop from '../../components/back-to-top/back-to-top'
 import './phonesContainer.scss'
-import { PhoneService } from '../../services/phone'
 import { setLoading } from '../../store/ui/actions'
+import { ThunkActions } from '../../store/phones/actions'
+import { getPhonesList } from '../../store/phones/getters'
 
-// TODO Mock api
 class PhonesContainer extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
       showBackToTop: false,
-      phoneList: []
     }
 
     this.checkScroll = this.checkScroll.bind(this)
-    this.getPhonesList = this.getPhonesList.bind(this)
+    // this.getPhonesList = this.getPhonesList.bind(this)
   }
 
   checkScroll() {
@@ -32,18 +32,8 @@ class PhonesContainer extends Component {
     }
   }
 
-  getPhonesList() {
-    this.props.setLoading(true)
-    PhoneService
-      .getList()
-      .then(({data: phoneList}) => {
-        this.setState({ phoneList })
-        this.props.setLoading(false)
-      })
-  }
-
   componentDidMount() {
-    this.getPhonesList()
+    this.props.getPhonesList()
     window.addEventListener('scroll', this.checkScroll)
   }
 
@@ -52,7 +42,7 @@ class PhonesContainer extends Component {
   }
 
   render() {
-    const { phoneList } = this.state
+    const { phoneList } = this.props
 
     return (
       <article className="phone-container__wrapper">
@@ -69,12 +59,17 @@ class PhonesContainer extends Component {
   }
 }
 
-const mapDispatchToProps = {
-  setLoading
-}
+const mapDispatchToProps = (dispatch) => ({
+  setLoading: dispatch(setLoading),
+  getPhonesList: bindActionCreators(ThunkActions.getPhones, dispatch)
+})
+
+const mapStateToProps = (state) => ({
+  phoneList: getPhonesList(state)
+})
 
 PhonesContainer.propTypes = {
   setLoading: PropTypes.func
 }
 
-export default connect(null, mapDispatchToProps)(PhonesContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(PhonesContainer)
