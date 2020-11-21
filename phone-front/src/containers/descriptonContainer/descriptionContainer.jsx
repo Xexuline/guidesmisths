@@ -7,17 +7,31 @@ import { setLoading } from '../../store/ui/actions'
 import { ThunkActions } from '../../store/phones/actions'
 import { getPhoneInfo } from '../../store/phones/getters'
 import ExtraActions from '../../components/extra-actions/extra-actions'
+import PhoneViever from './phoneViewer'
+import PhoneEditor from './phoneEditor'
 
 class DescriptionContainer extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      isEdditing: false
+    }
+
   }
 
   phoneAttributeGenerator(description, content) {
     if (!content || ['imageFileName', 'description', 'id', 'name', 'manufacturer'].includes(description) ) {
       return null
+    }
+
+    if(this.state.isEdditing) {
+      return (
+        <div key={ description } className="description__field">
+          <label htmlFor={`field_${description}`}>{ description }:</label>
+          <input type="text" defaultValue={content}></input>
+        </div>
+      )
     }
 
     return (
@@ -54,46 +68,42 @@ class DescriptionContainer extends Component {
 
   componentDidMount(){
     if(this.props.match) {
+      this.setState({ isEdditing: this.props.match.path === '/update/:id' }, () => {
+        this.changeExtraPosition()
+      })
       const id = this.getPhoneId()
       this.props.getPhoneInfo(id)      
     }
     window.addEventListener('resize', this.changeExtraPosition)
-    this.changeExtraPosition()
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.changeExtraPosition)
   }
 
+  componentDidUpdate(prevProp) {
+    if (prevProp.match.path !== this.props.match.path) {
+      this.setState({ isEdditing: this.props.match.path === '/update/:id' }, () => {this.changeExtraPosition()})
+    }
+  }
+
   render() {
     const { phoneInfo } = this.props
+    const { isEdditing } = this.state
 
     return (
-      <article className="description__wrapper">
-        <div className="description__top">
-          <img className="description__image" src={  phoneInfo.imageFileName ? `http://localhost:3001/uploads/${phoneInfo.imageFileName}` : null} alt=""/>
-          <div className="description__header">
-            <h2>{ phoneInfo.name }</h2>
-            <h3>{ phoneInfo.manufacturer }</h3>
-          </div>
-        </div>
-        <div className="description__bottom">
-          <div className="description__header">
-            <h2>{ phoneInfo.name }</h2>
-            <h3>{ phoneInfo.manufacturer }</h3>
-          </div>
-          <div className="description__attributes">
-            { Object.keys(phoneInfo).map(phoneAttribute => this.phoneAttributeGenerator(phoneAttribute, phoneInfo[phoneAttribute])) }
-          </div>
-          { 
-            !phoneInfo.description ? null :
-            <div>
-              <p><span className="description__paragraph">Description:</span> <span>{ phoneInfo.description }</span></p>
-            </div>
-          }
-        </div>
-        <ExtraActions id={ phoneInfo.id } onDelete={ this.removePhone.bind(this) }/>
-      </article>
+      <>
+        { isEdditing
+          ? <form className="description__wrapper">
+              <PhoneEditor phoneInfo={ phoneInfo } phoneAttributeGenerator={ this.phoneAttributeGenerator.bind(this) }/>
+              <ExtraActions onSave={ () => {} }/>
+            </form>
+          : <article className="description__wrapper"> 
+              <PhoneViever phoneInfo={ phoneInfo } phoneAttributeGenerator={ this.phoneAttributeGenerator.bind(this) }/>
+              <ExtraActions id={ phoneInfo.id } onDelete={ this.removePhone.bind(this) }/>
+            </article>
+        }
+      </>
     )
   }
 }
