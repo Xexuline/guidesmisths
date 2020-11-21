@@ -6,7 +6,6 @@ function HeaderComponent() {
   const history = useHistory()
   const location = useLocation()
   function goBack() {
-    console.log(location)
     history.goBack();
   }
 
