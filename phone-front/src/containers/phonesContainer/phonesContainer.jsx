@@ -18,7 +18,6 @@ class PhonesContainer extends Component {
     }
 
     this.checkScroll = this.checkScroll.bind(this)
-    // this.getPhonesList = this.getPhonesList.bind(this)
   }
 
   checkScroll() {
