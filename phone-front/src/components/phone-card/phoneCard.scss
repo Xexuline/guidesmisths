@@ -54,10 +54,10 @@
     width: px2rem(100);
 
     img {
-      width: 80px;
-      height: 120px;
+      height: px2rem(120);
+      max-width: px2rem(80);
       position: relative;
-      top: -20px;
+      top: px2rem(-20);
     }
   }
 
@@ -68,7 +68,7 @@
     height: 100%;
     justify-content: space-between;
     padding: px2rem(8) px2rem(12);
-    width: calc(100% - 100px);
+    width: calc(100% - #{px2rem(100)});
 
     &--top {
       display: flex;
