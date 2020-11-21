@@ -6,14 +6,9 @@
   bottom: 0;
   display: flex;
   justify-content: center;
-  left: 0 auto;
+  left: 0;
   position: fixed;
   width: 100%;
-
-  @include tablet {
-    right: 0;
-    width: 50%;
-  }
 
   &__wrapper {
     display: flex;

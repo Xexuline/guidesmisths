@@ -1,35 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import './descriptionContainer.scss'
-import { PhoneService } from '../../services/phone'
 import { setLoading } from '../../store/ui/actions'
+import { ThunkActions } from '../../store/phones/actions'
+import { getPhoneInfo } from '../../store/phones/getters'
 import noPhponeimg from '../../assets/img/svg/noPhone.svg'
-import emptyImage from '../../assets/img/svg/empty.svg'
 import ExtraActions from '../../components/extra-actions/extra-actions'
 
 class DescriptionContainer extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      phoneInfo: {
-        id: '',
-        name: '',
-        manufacturer: '',
-        description: '',
-        color: '',
-        price: '',
-        imageFileName: emptyImage,
-        screen: '',
-        processor: '',
-        ram: ''
-      }
-    }
+    this.state = {}
   }
 
   phoneAttributeGenerator(description, content) {
-    if (!content || ['imageFileName', 'description', 'id'].includes(description) ) {
+    if (!content || ['imageFileName', 'description', 'id', 'name', 'manufacturer'].includes(description) ) {
       return null
     }
 
@@ -40,45 +28,49 @@ class DescriptionContainer extends Component {
     </div>)
   }
 
-  getPhoneInfo(id) {
-    PhoneService.getInfo(id).then(({data: info}) => {
-      const { description,
-        _id,
-        imageFileName,
-        color,
-        price,
-        screen,
-        processor,
-        ram } = info
-      this.setState({ phoneInfo: {
-        id: _id,
-        description,
-        imageFileName: imageFileName || '',
-        color,
-        price,
-        screen,
-        processor,
-        ram }})
-      this.props.setLoading(false)
-    })
+  getPhoneId() {
+    return this.props.match.params.id
   }
 
   async removePhone() {
-    await PhoneService.remove(this.state.phoneInfo.id)
+    const id = this.getPhoneId()
+    await this.props.removePhone(id)
     this.props.history.push('/')
   }
 
-  componentDidMount(){
-    if(this.props.match) {
-      console.log(this.props)
-      this.props.setLoading(true)
-      const { id } = this.props.match.params
-      this.getPhoneInfo(id)      
+  changeExtraPosition() {
+    const pageWidth = document.querySelector('body').clientWidth
+    const extra = document.querySelector('nav.extra')
+
+    if (pageWidth > 768) {
+      const {offsetLeft, clientWidth } = document.querySelector('.description__bottom')
+
+      // debugger
+      extra.style.left = `${offsetLeft}px`
+      extra.style.maxWidth = `${clientWidth}px`
+    } else {
+      extra.style.left = ''
+      extra.style.maxWidth = ''
     }
   }
 
+
+  componentDidMount(){
+    if(this.props.match) {
+      const id = this.getPhoneId()
+      this.props.getPhoneInfo(id)      
+    }
+    window.addEventListener('resize', this.changeExtraPosition)
+    this.changeExtraPosition()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.changeExtraPosition)
+  }
+
   render() {
-    const { phoneInfo } = this.state
+    const { phoneInfo } = this.props
+
     return (
       <article className="description__wrapper">
         <div className="description__top">
@@ -94,7 +86,7 @@ class DescriptionContainer extends Component {
             <h3>{ phoneInfo.manufacturer }</h3>
           </div>
           <div className="description__attributes">
-            { Object.keys(this.state.phoneInfo).map(phoneAttribute => this.phoneAttributeGenerator(phoneAttribute, phoneInfo[phoneAttribute])) }
+            { Object.keys(phoneInfo).map(phoneAttribute => this.phoneAttributeGenerator(phoneAttribute, phoneInfo[phoneAttribute])) }
           </div>
           { 
             !phoneInfo.description ? null :
@@ -103,19 +95,25 @@ class DescriptionContainer extends Component {
             </div>
           }
         </div>
-        <ExtraActions id={ phoneInfo.id } onDelete={ this.removePhone.bind(this) } />
+        <ExtraActions id={ phoneInfo.id } onDelete={ this.removePhone.bind(this) }/>
       </article>
     )
   }
 }
 
-const mapDispatchToProps = {
-  setLoading
-}
+const mapDispatchToProps = (dispatch) => ({
+  setLoading: dispatch(setLoading),
+  getPhoneInfo: bindActionCreators(ThunkActions.getPhoneInfo, dispatch),
+  removePhone: bindActionCreators(ThunkActions.removePhone, dispatch)
+})
+
+const mapStateToProps = (state) => ({
+  phoneInfo: getPhoneInfo(state)
+})
 
 DescriptionContainer.propTyoes = {
   match: PropTypes.object,
   setLoading: PropTypes.func
 }
 
-export default connect(null, mapDispatchToProps)(DescriptionContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(DescriptionContainer)
