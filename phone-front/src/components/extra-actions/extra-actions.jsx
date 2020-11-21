@@ -6,15 +6,22 @@ import './extra-actions.scss'
 function ExtraActions(props) {
   const id = props.id
   const onDelete = props.onDelete
+  const onSave = props.onSave
   return (
    <nav className="extra">
      <ul className="extra__wrapper">
-        <li className="extra__item">
-         <Link className="extra__button" to={`/update/${id}`}>Edit</Link>
-        </li>
-        <li className="extra__item">
-         <button className="extra__button" onClick={ onDelete }>Delete</button>
-        </li>
+        { !id ? null : 
+          <li className="extra__item">
+            <Link className="extra__button" to={`/update/${id}`}>Edit</Link>
+          </li>}
+        {!onDelete? null : 
+          <li className="extra__item">
+            <button className="extra__button" onClick={ onDelete }>Delete</button>
+          </li>}
+        {!onSave ? null : 
+          <li className="extra__item">
+            <button className="extra__button" onClick={ onDelete }>Delete</button>
+          </li>}
      </ul>
    </nav>
   )
