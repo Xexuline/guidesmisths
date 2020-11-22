@@ -22,7 +22,19 @@ export class ThunkActions {
   }
 
   static updatePhone = (updatedInfo) => async (dispatch) => {
-    const { data: phoneInfo } = await PhoneService.update(updatedInfo.id, updatedInfo)
+    const {id, ...info} = updatedInfo
+    let infoToUpdate
+    if(info.imageFileName) {
+      infoToUpdate = new FormData()
+      Object.entries(info).forEach(([key, value]) => {
+        infoToUpdate.append(key, value)
+      })
+    } else {
+      infoToUpdate = info
+    }
+    
+
+    const { data: phoneInfo } = await PhoneService.update(id, infoToUpdate)
     const { _id, timestamp, __v, ...rest } = phoneInfo
 
     return dispatch({ type: SET_PHONE_DESC, payload: { ...rest, id: _id } })
