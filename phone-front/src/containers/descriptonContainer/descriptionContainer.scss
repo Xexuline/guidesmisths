@@ -8,7 +8,21 @@
   }
 
   &__header {
+    text-align: left;
 
+    h2 {
+      font-size: px2rem(24);
+      line-height: px2rem(30);
+      margin: 0;
+      margin-bottom: px2rem(8);
+    }
+
+    h3 {
+      font-size: px2rem(16);
+      line-height: px2rem(20);
+      margin: 0;
+      margin-bottom: px2rem(16);
+    }
   }
 
   &__wrapper {
@@ -139,9 +153,18 @@
       font-weight: bold;
       text-transform: capitalize;
     }
+  }
 
-    &--content {
+  &__button {
+    background-color: transparent;
+    border: none;
+    color: $primary;
+    font-size: px2rem(20);
+    line-height: px2rem(25);
+    text-decoration: none;
 
+    &:hover {
+      cursor: pointer;
     }
   }
 }
