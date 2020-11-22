@@ -7,8 +7,8 @@ import { setLoading } from '../../store/ui/actions'
 import { ThunkActions } from '../../store/phones/actions'
 import { getPhoneInfo } from '../../store/phones/getters'
 import ExtraActions from '../../components/extra-actions/extra-actions'
-import PhoneViever from './phoneViewer'
-import PhoneEditor from './phoneEditor'
+import PhoneViever from '../../components/phoneViewer/phoneViewer'
+import PhoneEditor from '../../components/phoneEditor/phoneEditor'
 
 class DescriptionContainer extends Component {
 
@@ -18,31 +18,6 @@ class DescriptionContainer extends Component {
       isEdditing: false
     }
 
-  }
-
-  phoneAttributeGenerator(description, content) {    
-    if(this.state.isEdditing) {
-      if (['imageFileName', 'description', 'id'].includes(description) ) {
-        return null
-      }
-
-      return (
-        <div key={ description } className="description__field">
-          <label htmlFor={`field_${description}`}>{ description }:</label>
-          <input id={`field_${description}`} type={ ['price', 'ram'].includes(description) ? 'number' : 'text' } defaultValue={content}></input>
-        </div>
-      )
-    }
-
-    if (!content || ['imageFileName', 'description', 'id', 'name', 'manufacturer'].includes(description) ) {
-      return null
-    }
-
-    return (
-    <div key={ description } className="description__attributes--box">
-      <span className="description__attributes--description">{ description }</span>
-      <span className="description__attributes--content">{ content }</span>
-    </div>)
   }
 
   getPhoneId() {
@@ -113,7 +88,9 @@ class DescriptionContainer extends Component {
 
   componentDidUpdate(prevProp) {
     if (prevProp.match.path !== this.props.match.path) {
-      this.setState({ isEdditing: this.props.match.path === '/update/:id' }, () => {this.changeExtraPosition()})
+      this.setState({ isEdditing: this.props.match.path === '/update/:id' }, () => {
+        this.changeExtraPosition()
+      })
     }
   }
 
@@ -125,11 +102,11 @@ class DescriptionContainer extends Component {
       <>
         { isEdditing
           ? <form className="description__wrapper">
-              <PhoneEditor phoneInfo={ phoneInfo } phoneAttributeGenerator={ this.phoneAttributeGenerator.bind(this) }/>
+              <PhoneEditor phoneInfo={ phoneInfo } />
               <ExtraActions onSave={ this.updatePhone.bind(this) }/>
             </form>
           : <article className="description__wrapper"> 
-              <PhoneViever phoneInfo={ phoneInfo } phoneAttributeGenerator={ this.phoneAttributeGenerator.bind(this) }/>
+              <PhoneViever phoneInfo={ phoneInfo } />
               <ExtraActions id={ phoneInfo.id } onDelete={ this.removePhone.bind(this) }/>
             </article>
         }
