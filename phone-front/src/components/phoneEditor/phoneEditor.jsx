@@ -1,10 +1,21 @@
 import React from 'react'
 
 export default function PhoneEditor (props) {
-  const { phoneInfo, phoneAttributeGenerator } = props
+  const { phoneInfo } = props
 
   function changeImage({target}) {
     document.querySelector('img.description__image').src = URL.createObjectURL(target.files[0])
+  }
+
+  function phoneAttributeGenerator(description, content){
+  if (['imageFileName', 'description', 'id'].includes(description) ) {
+    return null
+  }
+
+  return (<div key={ description } className="description__field">
+      <label htmlFor={`field_${description}`}>{ description }:</label>
+      <input id={`field_${description}`} type={ ['price', 'ram'].includes(description) ? 'number' : 'text' } defaultValue={content}></input>
+    </div>)
   }
 
   return (

@@ -1,7 +1,20 @@
 import React from 'react'
 
 export default function PhoneViever (props) {
-  const { phoneInfo, phoneAttributeGenerator } = props
+  const { phoneInfo } = props
+
+  function phoneAttributeGenerator(description, content) {    
+    if (!content || ['imageFileName', 'description', 'id', 'name', 'manufacturer'].includes(description) ) {
+      return null
+    }
+
+    return (
+    <div key={ description } className="description__attributes--box">
+      <span className="description__attributes--description">{ description }</span>
+      <span className="description__attributes--content">{ content }</span>
+    </div>)
+  }
+
   return (
     <>
       <div className="description__top">
