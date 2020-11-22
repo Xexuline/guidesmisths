@@ -7,6 +7,8 @@ var storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const filename = `${Date.now()}-${file.originalname}`.replace(/[^A-Za-z0-9 ]/, '')
+    req.body.imageFileName = filename
+
     cb(null, filename)
   }
 })
