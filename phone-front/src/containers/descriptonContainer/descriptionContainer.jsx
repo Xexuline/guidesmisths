@@ -63,7 +63,14 @@ class DescriptionContainer extends Component {
       if(['price', 'ram'].includes(curr)) {
         field.value = Number.parseInt(field.value) || 0
       }
-      
+
+      if( curr === 'imageFileName') {
+        return {
+          ...prev,
+          [curr]: field.files[0]
+        }
+      }
+
       return {
         ...prev,
         [curr]: field?.value || this.props.phoneInfo[curr]
