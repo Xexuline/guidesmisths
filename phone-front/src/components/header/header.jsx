@@ -13,11 +13,18 @@ function HeaderComponent() {
     history.push('/new')
   }
 
+  function goHome() {
+    history.push('/')
+  }
+
   return (
     <header className="header">
       <button className="icon icon-arrow header__button" onClick={ goBack }></button>
       <h1>Phone catalog</h1>
-      { location.pathname === '/' ? <button className="icon icon-plus header__button" onClick={ create }></button> : <span className="header__button"></span>}
+      { location.pathname === '/'
+        ? <button className="icon icon-plus header__button" onClick={ create }></button>
+        : <button className="icon icon-home header__button" onClick={ goHome }></button>
+      }
     </header>
   )
 }
