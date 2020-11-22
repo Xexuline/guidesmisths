@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function PhoneEditor (props) {
-  const { phoneInfo } = props
+  const { phoneInfo, isCreation } = props
 
   function changeImage({target}) {
     document.querySelector('img.description__image').src = URL.createObjectURL(target.files[0])
@@ -18,12 +18,19 @@ export default function PhoneEditor (props) {
     </div>)
   }
 
+  function emitFileClick(e) {
+    e.preventDefault()
+    const element = document.querySelector('#field_imageFileName')
+    element.click()
+  }
+
   return (
     <>
       <div className="description__top description__top--editor">
-        <img className="description__image" src={  phoneInfo.imageFileName ? `http://localhost:3001/uploads/${phoneInfo.imageFileName}` : null} alt=""/>
+        <img className="description__image" src={  phoneInfo.imageFileName ? `http://localhost:3001/uploads/${phoneInfo.imageFileName}` : null} alt="" onClick={ emitFileClick }/>
         <div>
-          <input type="file" id="field_imageFileName" accept="image/x-png,image/gif,image/jpeg" onChange={ changeImage }></input>
+          <button className="description__button" onClick={ emitFileClick }>{ isCreation ? 'Add image' : 'Change image'}</button>
+          <input type="file" id="field_imageFileName" accept="image/x-png,image/gif,image/jpeg" onChange={ changeImage } style={{ display: 'none' }}></input>
         </div>
       </div>
       <div className="description__bottom description__bottom--editor">

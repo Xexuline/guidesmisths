@@ -87,7 +87,7 @@ class CreationContainer extends Component {
 
     return (
       <form className="description__wrapper">
-        <PhoneEditor phoneInfo={ phoneInfo } />
+        <PhoneEditor phoneInfo={ phoneInfo } isCreation="true"/>
         <ExtraActions onSave={ this.createPhone.bind(this) }/>
       </form>
     )
