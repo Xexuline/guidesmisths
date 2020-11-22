@@ -39,4 +39,22 @@ export class ThunkActions {
 
     return dispatch({ type: SET_PHONE_DESC, payload: { ...rest, id: _id } })
   }
+
+  static createPhone = (phoneInfo) => async (dispatch) => {
+    let infoToCreate
+    if(phoneInfo.imageFileName) {
+      infoToCreate = new FormData()
+      Object.entries(phoneInfo).forEach(([key, value]) => {
+        infoToCreate.append(key, value)
+      })
+    } else {
+      infoToCreate = phoneInfo
+    }
+    
+    debugger
+    const { data: createdPhone } = await PhoneService.create(infoToCreate)
+    const { id } = createdPhone
+
+    return { id }
+  }
 }

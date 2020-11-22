@@ -17,9 +17,9 @@ export class PhoneService {
     }
   }
 
-  static async create (id, payload) {
+  static async create (payload) {
     try {
-      return await http.post(`/phone/${id}`)
+      return await http.post(`/phone`, payload)
       
     } catch (e) {
       console.error(e)
