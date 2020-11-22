@@ -23,14 +23,11 @@ exports.getPhones = (id) => {
 };
 
 exports.updatePhone = async (phoneId, phoneInfo) => {
-  const updatedPhoneInfo = await phone.update(phoneId, phoneInfo)
-
-  if(phoneInfo.imageFileName) {
+if(phoneInfo.imageFileName) {
     const oldPhoneInfo = await this.getPhones(phoneId)
     await removeFile(oldPhoneInfo.imageFileName)
   }
-  
-  return updatedPhoneInfo
+  return await phone.update(phoneId, phoneInfo)
 };
 
 exports.removePhone = async (phoneId) => {
