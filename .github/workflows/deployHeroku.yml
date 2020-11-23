@@ -17,10 +17,7 @@ jobs:
             node-version: ${{ matrix.node-version }}
             REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL}}
             REACT_APP_API_URL: ${{secrets.REACT_APP_API_URL}}
-      - run: cd phone-front
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+      - run: cd phone-front && npm ci && npm run build
       - name: move build to backend
         run: cd ..
       - run: mv phone-front/build/* phone-back/public/
