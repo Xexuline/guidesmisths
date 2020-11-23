@@ -26,15 +26,6 @@ jobs:
           heroku_app_name: "phone-catalog" #Must be unique in Heroku
           heroku_email: ${{secrets.HEROKU_APP_MAIL}}
           appdir: "phone-back"
-          usedocker: true
-          docker_build_args: |
-            NODE_ENV
-            PORT
-            DB_USER
-            DB_PWD
-            DB_PORT
-            DB_HOST
-            DB_NAME
         env:
           NODE_ENV: production
           PORT: ${{ secrets.PORT }}
