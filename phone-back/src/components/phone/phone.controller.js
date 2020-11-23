@@ -34,5 +34,5 @@ exports.removePhone = async (phoneId) => {
   const deletedPhone = await phone.delete(phoneId);
   await removeFile(deletedPhone.imageFileName)
 
-  return dphonedelete
+  return deletedPhone
 }
