@@ -1,0 +1,21 @@
+version: '3'
+services:
+  phone-back:
+    build:
+      context: ./phone-back
+    ports:
+      - "3001:3001"
+    container_name: phone-back
+    volumes:
+       - ./api:/usr/src/app/api
+       - /usr/src/app/api/node_modules
+  phone-front:
+    build:
+      context: ./phone-front
+    ports:
+      - "3000:3000"
+    container_name: phone-front
+    stdin_open: true
+    volumes:
+       - ./phone-front:/usr/src/app/phone-front
+       - /usr/src/app/my-app/node_modules
