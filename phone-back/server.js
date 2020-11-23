@@ -13,6 +13,10 @@ const host = `${config.defaultServer.host || ' localhost'}:${config.defaultServ
 app.use(helmet());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use((req, res, next) => {
+  res.header('Content-Security-Policy', 'unsafe-inline');
+  next();
+});
 
 app.use('/api/v1', cors(), routes);
 app.use('/', express.static(`${__dirname}/public`));
