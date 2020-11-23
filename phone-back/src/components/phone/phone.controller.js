@@ -12,7 +12,14 @@ const removeFile = async (file) => {
   return
 }
 
-exports.savePhone = (phoneInfo) => phone.add(phoneInfo);
+exports.savePhone = (phoneInfo) => {
+  let infoToCreate
+  if(phoneInfo.id){
+    const {id, ...rest } = phoneInfo
+    infoToCreate = rest
+  }
+  return phone.add(infoToCreate)
+};
 
 exports.getPhones = (id) => {
   if (id) {
