@@ -15,8 +15,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
             node-version: ${{ matrix.node-version }}
-            REACT_APP_BASE_URL: ${{secrets.REACT_APP_BASE_URL}}
-            REACT_APP_API_URL: ${{secrets.REACT_APP_API_URL}}
       - run: cd phone-front && npm ci && npm run build
       - name: move build to backend
         run: cd ..

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './phoneCard.scss'
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { REACT_APP_BASE_URL } from '../../config/index.json'
 class PhoneCard extends Component {
 
   render() {
@@ -9,7 +10,7 @@ class PhoneCard extends Component {
     return (
       <Link className="phone-card__wrapper" to={`/${ _id }`}>
         <div className="phone-card__image">
-          <img src={ `http://localhost:3001/uploads/${imageFileName}` } alt=""/>
+          <img src={ `${REACT_APP_BASE_URL}/uploads/${imageFileName}` } alt=""/>
         </div>
         <div className="phone-card__info">
           <div className="phone-card__info--top">
