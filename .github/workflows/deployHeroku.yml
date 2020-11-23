@@ -14,12 +14,12 @@ jobs:
           heroku_app_name: "phone-catalog" #Must be unique in Heroku
           heroku_email: ${{secrets.HEROKU_APP_MAIL}}
           appdir: "phone-back"
-          env:
-            NODE_ENV: production
-            PORT: ${{ secrets.PORT }}
-            DB_USER: ${{ secrets.DB_USER }}
-            DB_PWD: ${{ secrets.DB_PWD }}
-            DB_PORT: ${{ secrets.DB_PORT }}
-            DB_HOST: ${{ secrets.DB_HOST }}
-            DB_NAME: ${{ secrets.DB_NAME }}
+        env:
+          NODE_ENV: production
+          PORT: ${{ secrets.PORT }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PWD: ${{ secrets.DB_PWD }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
 
