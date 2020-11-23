@@ -19,7 +19,7 @@ export default function PhoneViever (props) {
   return (
     <>
       <div className="description__top">
-        <img className="description__image" src={  phoneInfo.imageFileName ? `${REACT_APP_BASE_URL}/uploads/${phoneInfo.imageFileName}` : null} alt=""/>
+        <img className="description__image" src={  phoneInfo.imageFileName ? `${REACT_APP_BASE_URL}uploads/${phoneInfo.imageFileName}` : null} alt=""/>
         <div className="description__header">
           <h2>{ phoneInfo.name }</h2>
           <h3>{ phoneInfo.manufacturer }</h3>

@@ -10,7 +10,7 @@ class PhoneCard extends Component {
     return (
       <Link className="phone-card__wrapper" to={`/${ _id }`}>
         <div className="phone-card__image">
-          <img src={ `${REACT_APP_BASE_URL}/uploads/${imageFileName}` } alt=""/>
+          <img src={ `${REACT_APP_BASE_URL}uploads/${imageFileName}` } alt=""/>
         </div>
         <div className="phone-card__info">
           <div className="phone-card__info--top">
