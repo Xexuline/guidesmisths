@@ -51,7 +51,6 @@ export class ThunkActions {
       infoToCreate = phoneInfo
     }
     
-    debugger
     const { data: createdPhone } = await PhoneService.create(infoToCreate)
     const { id } = createdPhone
 
