@@ -4,7 +4,6 @@
 .phone-container {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 80px);
   padding: 0 px2rem(20);
   overflow: scroll;
   
@@ -16,5 +15,6 @@
 
   &__wrapper {
     background-color: $bg;
+    min-height: calc(100vh - #{px2rem(80)});
   }
 }
