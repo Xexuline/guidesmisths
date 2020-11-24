@@ -14,10 +14,10 @@ const removeFile = async (file) => {
 
 exports.savePhone = (phoneInfo) => {
   let infoToCreate
-  if(phoneInfo.id){
-    const {id, ...rest } = phoneInfo
-    infoToCreate = rest
-  }
+  const {id, ...rest } = phoneInfo
+
+  infoToCreate = rest
+  
   return phone.add(infoToCreate)
 };
 
