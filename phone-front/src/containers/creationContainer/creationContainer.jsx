@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import '../descriptonContainer/descriptionContainer.scss'
 import { setLoading } from '../../store/ui/actions'
-import { getPhoneInfo } from '../../store/phones/getters'
 import ExtraActions from '../../components/extra-actions/extra-actions'
 import PhoneEditor from '../../components/phoneEditor/phoneEditor'
 import { ThunkActions } from '../../store/phones/actions'
@@ -31,7 +30,7 @@ class CreationContainer extends Component {
   async createPhone(e) {
     e.preventDefault()
 
-    const phoneData = Object.keys(this.props.phoneInfo).reduce((prev, curr) => {
+    const phoneData = Object.keys(this.state.phoneInfo).reduce((prev, curr) => {
       const field = document.querySelector(`#field_${curr}`)
       if(['price', 'ram'].includes(curr)) {
         field.value = Number.parseInt(field.value) || 0
@@ -46,9 +45,10 @@ class CreationContainer extends Component {
 
       return {
         ...prev,
-        [curr]: field?.value || this.props.phoneInfo[curr]
+        [curr]: field?.value || ''
       }
     }, {})
+
     const { id } = await this.props.createPhone(phoneData)
     this.props.history.push(`/${id}`)
 
@@ -99,13 +99,9 @@ const mapDispatchToProps = (dispatch) => ({
   createPhone: bindActionCreators(ThunkActions.createPhone, dispatch),
 })
 
-const mapStateToProps = (state) => ({
-  phoneInfo: getPhoneInfo(state)
-})
-
 CreationContainer.propTyoes = {
   match: PropTypes.object,
   setLoading: PropTypes.func
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreationContainer)
+export default connect(null, mapDispatchToProps)(CreationContainer)
