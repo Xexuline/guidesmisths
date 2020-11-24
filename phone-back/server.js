@@ -21,6 +21,10 @@ app.use((req, res, next) => {
 app.use('/api/v1', cors(), routes);
 app.use('/', express.static(`${__dirname}/public`));
 
+app.get('*', function (req, res) { 
+  res.sendFile(__dirname+'/public/index.html'); 
+}) 
+
 
 app.listen(port, () => { console.log(`running on ${host}`); });
 
