@@ -4,6 +4,12 @@
   @return ($pixels / 16) * 1rem;
 }
 
+@mixin phone-landscape {
+  @media (orientation: landscape) {
+    @content;
+  }
+}
+
 @mixin tablet {
   @media (min-width: $tablet + 1px) {
     @content;

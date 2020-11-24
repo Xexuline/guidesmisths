@@ -37,6 +37,12 @@
       flex-direction: row;
       justify-content: space-evenly;
     }
+
+    @include phone-landscape {
+      flex-direction: row;
+      justify-content: space-evenly;
+      overflow: scroll;
+    }
   }
 
   &__top {
