@@ -2,7 +2,7 @@
 
 Complete proyect of phone catalog  
 
-## Before start
+## Before start
 
 This proyect is allocated in two separated folders under the same repository.
 
