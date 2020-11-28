@@ -97,5 +97,11 @@
       font-size: px2rem(22);
       line-height: px2rem(27);
     }
+
+    &--name, &--manufacturer {
+      max-width: calc(100% - px2rem(50));
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
