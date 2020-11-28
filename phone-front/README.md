@@ -21,10 +21,10 @@ If you want to use docker to launch front:
 To launch end to end testing type `npm run cypress` to launch cypress tool and test the website
 
 ### Build
-To prepare the proyect for production run `npm run build`. This command create build folder where it allocate the production bundle
-### Start proyect
+To prepare the project for production run `npm run build`. This command create build folder where it allocate the production bundle
+### Start project
 
-If you want to launch the proyect just follow those steps, **be sure that you're on the path `/phone-front`**:
+If you want to launch the project just follow those steps, **be sure that you're on the path `/phone-front`**:
 
 1. `npm install`
 2. update  `/src/config/index.js` with the API endpoints 

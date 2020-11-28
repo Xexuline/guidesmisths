@@ -15,8 +15,8 @@ DB_NAME=mlab database
 3. Run docker image docker run bulletinboard:1.0
 
 ## Without Docker
-### Launch proyect
-If you want to launch the proyect just follow those steps, **be sure that you're on the path `/phone-back`**:
+### Launch project
+If you want to launch the project just follow those steps, **be sure that you're on the path `/phone-back`**:
 
 1. `npm install`
 2. Create `.env` file with the API endpoints 
@@ -28,7 +28,7 @@ DB_PORT=mlab port
 DB_HOST=mlab host
 DB_NAME=mlab database
 ```
-3. `npm run start` or `npm run dev` to launch proyect with auto-reload. Most suitable for developing
+3. `npm run start` or `npm run dev` to launch project with auto-reload. Most suitable for developing
 
 ### Test
 To launch unit test type `npm run test`
