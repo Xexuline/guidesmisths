@@ -1,9 +1,10 @@
 const multer = require('multer');
 const ImgurStorage = require('multer-storage-imgur');
-const path = require('path')
+const config = require('../../../config');
+
 
 const upload = multer({
-  storage: ImgurStorage({ clientId: process.env.IMGURL_ID })
+  storage: ImgurStorage({ clientId: config.imgUrl.clientId })
 })
 
 
