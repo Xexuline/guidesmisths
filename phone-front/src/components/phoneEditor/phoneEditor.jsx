@@ -1,5 +1,4 @@
 import React from 'react'
-import { REACT_APP_BASE_URL } from '../../config/index.json'
 
 export default function PhoneEditor (props) {
   const { phoneInfo, isCreation } = props
@@ -28,7 +27,7 @@ export default function PhoneEditor (props) {
   return (
     <>
       <div className="description__top description__top--editor">
-        <img className="description__image" src={  phoneInfo.imageFileName ? `${REACT_APP_BASE_URL}uploads/${phoneInfo.imageFileName}` : null} alt="" onClick={ emitFileClick }/>
+        <img className="description__image" src={ phoneInfo.imageFileName ? phoneInfo.imageFileName : null} alt="" onClick={ emitFileClick }/>
         <div>
           <button className="description__button" onClick={ emitFileClick }>{ isCreation ? 'Add image' : 'Change image'}</button>
           <input type="file" id="field_imageFileName" accept="image/x-png,image/gif,image/jpeg" onChange={ changeImage } style={{ display: 'none' }}></input>

@@ -1,19 +1,10 @@
 const multer = require('multer');
+const ImgurStorage = require('multer-storage-imgur');
 const path = require('path')
-// const upload = multer({ dest: `${__dirname}/public/uploads`})
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.resolve(__dirname, '../../../public/uploads'))
-  },
-  filename: function (req, file, cb) {
-    const filename = `${Date.now()}-${file.originalname}`.replace(/[^A-Za-z0-9 ]/, '')
-    req.body.imageFileName = filename
 
-    cb(null, filename)
-  }
+const upload = multer({
+  storage: ImgurStorage({ clientId: process.env.IMGURL_ID })
 })
-
-const upload = multer({ storage: storage })
 
 
 module.exports = (req, res, next) => {

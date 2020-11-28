@@ -7,8 +7,9 @@ const multipartUploader = require('../middleware/multiparUploader');
 const DataRouting = express.Router();
 DataRouting.post('/',multipartUploader, emptyValidator, (req, res) => {
   const phoneInfo = req.body;
+  debugger
   if(req.file) {
-    phoneInfo.imageFileName = req.file.filename
+    phoneInfo.imageFileName = req.file.data.link
   }
 
   phone.savePhone(phoneInfo)
@@ -17,6 +18,7 @@ DataRouting.post('/',multipartUploader, emptyValidator, (req, res) => {
       res.send({ id: result._id });
     })
     .catch((error) => {
+      debugger
       res.statusCode = STATUS.INTERNAL_SERVER_ERROR;
       res.send({ error: error.message });
     });
@@ -51,6 +53,11 @@ DataRouting.put('/:id', multipartUploader, emptyValidator, async (req, res) => {
   try {
     const phoneId = req.params.id;
     const phoneInfo = req.body;
+
+    if(req.file) {
+      phoneInfo.imageFileName = req.file.data.link
+    }
+    
     const updatedPhoneInfo = await phone.updatePhone(phoneId, phoneInfo);
 
     res.statusCode = STATUS.OK;
